@@ -14,9 +14,12 @@ public class DragAndDropController : MonoBehaviour
     private SpriteRenderer render;
     private GameObject plateformeASupr;
 
+    public string nomCarte;
+
     private Vector3 curPosition;
 
     public GameObject gamePrefab;
+    private bool fusion = false;
 
     void Start()
     {
@@ -49,9 +52,17 @@ public class DragAndDropController : MonoBehaviour
         }
         if(canDrop)
         {
-            Instantiate(gamePrefab, transform.position, transform.rotation);
-            Destroy(gameObject);
-            Destroy(plateformeASupr);
+            if(!fusion)
+            {
+                Instantiate(gamePrefab, transform.position, transform.rotation);
+                Destroy(gameObject);           
+                Destroy(plateformeASupr);
+            }
+            else
+            {
+                transform.position = curPosition;
+            }
+            
         }
     }
 
@@ -64,6 +75,13 @@ public class DragAndDropController : MonoBehaviour
             plateformeASupr = coll.gameObject;
             
         } 
+        if(coll.gameObject.CompareTag("emplacementFusion"))
+        {
+            canDrop = true;
+            render.color = Color.green;
+            plateformeASupr = null;
+            fusion = true;
+        } 
     }
 
     void OnTriggerExit2D(Collider2D coll)
@@ -72,8 +90,15 @@ public class DragAndDropController : MonoBehaviour
         {
             canDrop = false;
             render.color = Color.yellow;
-            
         }
+        if(coll.gameObject.CompareTag("emplacementFusion"))
+        {
+            canDrop = false;
+            render.color = Color.black;
+            plateformeASupr = null;
+            fusion = false;
+        }
+        
     }
 
 }

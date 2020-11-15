@@ -6,11 +6,19 @@ public class PlayerBehaviour : MonoBehaviour
 {
 
     public Rigidbody2D rb;
+
     public float vitessePlayer = 5;
     public float jumpForce = 5;
+
     public SpriteRenderer rend;
 
+    private float h;
+    private float friction;
+
     private bool isGrounded = true;
+    private bool isSlipping = false;
+    private bool isRebond = false;
+
 
     void Start()
     {
@@ -20,10 +28,24 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Update()
     {
-        float h = Input.GetAxis("Horizontal") * vitessePlayer;
+        h = Input.GetAxis("Horizontal") * vitessePlayer;
 
-        rb.velocity = new Vector2(h, rb.velocity.y);
-
+        if(isSlipping)
+        {
+            if(h == Mathf.Abs(vitessePlayer))
+            {
+                rb.velocity = new Vector2(h, rb.velocity.y);
+            }
+            else
+            {
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);                
+            }
+        }
+        else
+        {
+            rb.velocity = new Vector2(h, rb.velocity.y);
+        }
+        
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             jump();            
@@ -41,7 +63,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     void jump()
     {
-        rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        if(isRebond)
+        {
+            rb.AddForce(transform.up * jumpForce * 2, ForceMode2D.Impulse);
+        }
+        else
+        {
+            rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        }
+        
     }
  
     void OnCollisionEnter2D(Collision2D coll)
@@ -50,6 +80,17 @@ public class PlayerBehaviour : MonoBehaviour
         {
             isGrounded = true;
         }
+        if(coll.gameObject.CompareTag("PlancheGelée"))
+        {
+            isGrounded = true;
+            isSlipping = true;
+        }
+        if(coll.gameObject.CompareTag("Ressort"))
+        {
+            isRebond = true;
+            jump();
+            isRebond = false;
+        }
     }
 
     void OnCollisionExit2D(Collision2D coll)
@@ -57,6 +98,11 @@ public class PlayerBehaviour : MonoBehaviour
         if(coll.gameObject.CompareTag("Grounded"))
         {
             isGrounded = false;
+        }
+        if(coll.gameObject.CompareTag("PlancheGelée"))
+        {
+            isGrounded = false;
+            isSlipping = false;
         }
     } 
 

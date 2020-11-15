@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Grounded
   - emplacementCarte
+  - emplacementFusion
+  - carte
+  - "PlancheGel\xE9e"
+  - Ressort
   layers:
   - Default
   - TransparentFX

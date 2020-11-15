@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 2463610269122504914}
   - component: {fileID: 2463610269122504909}
   - component: {fileID: 2463610269122504908}
-  - component: {fileID: 2463610269122504911}
   - component: {fileID: 2463610269122504910}
   m_Layer: 0
   m_Name: "Gla\xE7on"
-  m_TagString: Untagged
+  m_TagString: Grounded
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,25 +100,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 5
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 61a8b072693e63d47a285eeb122d2a8d, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &2463610269122504911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2463610269122504905}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 127d5691de7726144b3f84b65a23f82c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 2463610269122504908}
-  vitesse: 2
 --- !u!61 &2463610269122504910
 BoxCollider2D:
   m_ObjectHideFlags: 0
